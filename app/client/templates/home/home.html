@@ -22,12 +22,47 @@
     </div>
 
 
+
     <section class="news container">
+
+
+
+      <section class="row">
+
+        <div class="col">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Top five frequency words</div>
+
+            <!-- Table -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Word</th>
+                  <th>Times</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each countWord}}
+                  <tr>
+                    <td>{{ add @index }}</td>
+                    <td>{{text}}</td>
+                    <td>{{count}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
 
       {{#with news}}
         <div class="well ">
                <form class="form-horizontal" role="form" data-pubDate="{{pubDate}}" >
-                <h4>{{title}}</h4>
+                <h4>{{title}}  <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div> </h4>
                 <div class="content">
                   {{{description}}}
                 </div>
@@ -35,33 +70,34 @@
                 {{#if currentUser}}
                 <hr>
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="happy" role="group">
-                   <button type="button" class="btn btn-default">
+                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="happy" role="group" {{isVote pubDate }} >
+                   <button type="button" class="btn btn-default" {{isVote pubDate }}>
                      <img width=30 src="happy.svg" alt="">
                      &nbsp; {{getPercent pubDate 'happy' }}%
                    </button>
                  </div>
-                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="sad" role="group">
-                   <button type="button" class="btn btn-default">
+                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="sad" role="group" {{isVote pubDate }}>
+                   <button type="button" class="btn btn-default" {{isVote pubDate }}>
                      <img width=30 src="sad.svg" alt="">
                      &nbsp; {{getPercent pubDate 'sad' }}%
                    </button>
                  </div>
-                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="shock" role="group">
-                   <button type="button" class="btn btn-default">
+                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="shock" role="group" {{isVote pubDate }}>
+                   <button type="button" class="btn btn-default" {{isVote pubDate }}>
                      <img width=30 src="shock.svg" alt="">
                      &nbsp; {{getPercent pubDate 'shock' }}%
                    </button>
                  </div>
                </div>
                 <hr>
-                
+
                   <div class="form-group" style="padding:14px;">
                      <textarea class="textarea form-control " name="comment" placeholder="Leave your comments"></textarea>
                    </div>
                    <div class="clearfix">
                        <input type="submit" class="btn btn-success pull-right" value="Post">
                    </div>
+
                    <hr>
                    {{#each comments}}
 
@@ -84,6 +120,8 @@
               </form>
         </div>
       {{/with}}
+
+
 
     </section>
 

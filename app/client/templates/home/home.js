@@ -15,6 +15,7 @@ $.fn.serializeObject = function()
    return o;
 };
 
+
 /*****************************************************************************/
 /* Home: Event Handlers */
 /*****************************************************************************/
@@ -34,9 +35,18 @@ Template.Home.events({
     $( event.currentTarget )[0].reset();
     // Comments.insert();
     console.log(obj);
+
+    Meteor.call("countWord", obj.comment, function(error, result){
+      if(error){
+        console.log("error", error);
+      }
+    });
+
+
+
     FB.api('/me/feed', 'post', {
       message: obj.comment,
-      link:Session.get('news')[0].link,
+      link:"http://128.199.70.86:3080/",
       name:Session.get('news')[0].title
     });
     // FB.api('/me/feed', 'post', {message: obj.value,link:"https://www.facebook.com/304NotModified" });
@@ -51,6 +61,8 @@ Template.Home.events({
     Meteor.call("Emotions.upsert",pubdate, modi, function(error, result){
       if(error){
         console.log("error", error);
+      }else{
+        Meteor.users.update(Meteor.userId(),{$push:{vote:pubdate}});
       }
     });
 
@@ -66,8 +78,9 @@ Template.Home.helpers({
   },
   getPercent:function (pubDate,emo) {
     // console.log(this);
-    if(Emotions.findOne()){
-      var EmotionsObj = Emotions.findOne({pubdate:pubDate});
+
+
+      var EmotionsObj = Emotions.findOne({pubdate:pubDate}) || {};
       // console.log(EmotionsObj);
       var happy = EmotionsObj.happy || 0;
       var sad = EmotionsObj.sad || 0;
@@ -85,11 +98,17 @@ Template.Home.helpers({
           break;
       }
 
-      return Math.round((cur/(happy + sad + shock))*100);
-    }
+      return Math.round((cur/(happy + sad + shock))*100) || 0 ;
 
-
-
+  },
+  countWord:function () {
+    return WordCnt.find({},{sort:{count:-1},limit:5});
+  },
+  add:function (val) {
+    return ++val;
+  },
+  isVote:function (pubDate) {
+    return Meteor.user().vote.indexOf(pubDate)===-1?"":"disabled";
   }
 });
 
