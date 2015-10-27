@@ -1,4 +1,7 @@
 <template name="Home">
+
+
+
   <div class="home">
 
     <div class="navbar navbar-default" role="navigation">
@@ -59,10 +62,21 @@
       {{#with news}}
         <div class="well ">
                <form class="form-horizontal" role="form" data-pubDate="{{pubDate}}" >
-                <h4>{{title}}</h4> <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div>
+                <h4>{{title}}</h4>
+
+                <!-- <br>
+                <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div>
+                <br> -->
+
+
+                <div style="height:20px">
+                  {{> facebookShare href='http://128.199.70.86:3080/' }}
+                </div>
+
                 <div class="content">
                   {{{description}}}
                 </div>
+
 
                 {{#if currentUser}}
                 <hr>

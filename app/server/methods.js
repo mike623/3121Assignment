@@ -26,8 +26,9 @@ Meteor.methods({
     for( var i in words){
       if(words[i].length > 1 ){
         // hist[words[i]] ? hist[words[i]]+=1 : hist[words[i]]=1;
-        console.log(words[i]);
-        WordCnt.update({text:{ $regex:"^"+words[i]+"$",$options:'i'}},{$inc:{count:1}});
+        // console.log(words[i]);
+        // WordCnt.upsert({text:{ $regex:"^"+words[i]+"$",$options:'i'}},{$inc:{count:1}});
+        WordCnt.upsert({text:words[i]},{$inc:{count:1}});
       }
     }
   }

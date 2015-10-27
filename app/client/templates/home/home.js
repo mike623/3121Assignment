@@ -36,7 +36,9 @@ Template.Home.events({
     // Comments.insert();
     console.log(obj);
 
-    Meteor.call("countWord", obj.comment, function(error, result){
+    var cleanedWord = obj.comment.removeStopWords();
+
+    Meteor.call("countWord", cleanedWord, function(error, result){
       if(error){
         console.log("error", error);
       }
@@ -108,7 +110,9 @@ Template.Home.helpers({
     return ++val;
   },
   isVote:function (pubDate) {
-    return Meteor.user().vote.indexOf(pubDate)===-1?"":"disabled";
+    if(!Meteor.user().vote)
+      return "";
+    return  Meteor.user().vote.indexOf(pubDate)===-1?"":"disabled";
   }
 });
 
@@ -116,9 +120,34 @@ Template.Home.helpers({
 /* Home: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Home.onCreated(function () {
+  window.fbAsyncInit = function() {
+  FB.init({
+      appId      : '942932345800861',
+      status     : true,
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
 });
 
 Template.Home.onRendered(function () {
+  Meteor.setTimeout(function () {
+    FB.init({
+        appId      : '942932345800861',
+        status     : true,
+        xfbml      : true,
+        version    : 'v2.4'
+      });
+  }, 1000);
 });
 
 Template.Home.onDestroyed(function () {

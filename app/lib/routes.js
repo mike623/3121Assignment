@@ -23,3 +23,20 @@ Router.route("Home", {
     ];
   }
 });
+
+Router.route("Facts", {
+  data:function(){
+     return {
+       news : _.first(Session.get('news')),
+       countWord : WordCnt.find({})
+     };
+  },
+  waitOn:function () {
+    return [
+      Meteor.subscribe("getWordCount"),
+      Meteor.subscribe("Comments"),
+      Meteor.subscribe("Users"),
+      Meteor.subscribe("Emotions")
+    ];
+  }
+});

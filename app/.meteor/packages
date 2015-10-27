@@ -28,3 +28,4 @@ service-configuration
 stevezhu:lodash
 peerlibrary:xml2js
 http
+facts
