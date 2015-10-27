@@ -68,10 +68,11 @@
                 <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div>
                 <br> -->
 
-
+                {{#if currentUser}}
                 <div style="height:20px">
                   {{> facebookShare href='http://128.199.70.86:3080/' }}
                 </div>
+                {{/if}}
 
                 <div class="content">
                   {{{description}}}
