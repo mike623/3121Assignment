@@ -27,30 +27,39 @@ Template.Home.events({
     var pubdate = $(event.currentTarget).data('pubdate');
     var obj = $( event.currentTarget ).serializeObject();
     // console.log(obj);
-    obj.pubdate=pubdate;
-    obj.user = Meteor.user();
-    obj.postAt = new Date().getTime();
-    // obj.user = Meteor.user();
-    Comments.insert(obj);
-    $( event.currentTarget )[0].reset();
-    // Comments.insert();
-    console.log(obj);
 
-    var cleanedWord = obj.comment.removeStopWords();
+    if(!_.isEmpty(obj.comment.trim())){
 
-    Meteor.call("countWord", cleanedWord, function(error, result){
-      if(error){
-        console.log("error", error);
-      }
-    });
+      obj.pubdate=pubdate;
+      obj.user = Meteor.user();
+      obj.postAt = new Date().getTime();
+      // obj.user = Meteor.user();
+      Comments.insert(obj);
+      $( event.currentTarget )[0].reset();
+      // Comments.insert();
+      console.log(obj);
+
+      var cleanedWord = obj.comment.removeStopWords();
 
 
 
-    FB.api('/me/feed', 'post', {
-      message: obj.comment,
-      link:"http://128.199.70.86:3080/",
-      name:Session.get('news')[0].title
-    });
+      Meteor.call("countWord", cleanedWord, function(error, result){
+        if(error){
+          console.log("error", error);
+        }
+      });
+
+
+
+      FB.api('/me/feed', 'post', {
+        message: obj.comment,
+        link:"http://128.199.70.86:3080/",
+        name:Session.get('news')[0].title
+      });
+
+    }
+
+
     // FB.api('/me/feed', 'post', {message: obj.value,link:"https://www.facebook.com/304NotModified" });
   },
   'click .emotionBtn':function (event) {
