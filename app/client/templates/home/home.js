@@ -102,7 +102,7 @@ Template.Home.helpers({
 
   },
   countWord:function () {
-    return WordCnt.find({},{sort:{count:-1},limit:5});
+    return WordCnt.find({count:{$ne:0}},{sort:{count:-1},limit:5});
   },
   add:function (val) {
     return ++val;

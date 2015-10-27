@@ -27,12 +27,12 @@
 
 
 
-      <section class="row">
-
-        <div class="col">
           <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">Top five frequency words</div>
+            <!-- <div class="panel-heading">Top frequency words</div> -->
+            <div class="panel-heading">
+              <h3 class="panel-title">Top frequency words</h3>
+            </div>
 
             <!-- Table -->
             <table class="table">
@@ -54,15 +54,12 @@
               </tbody>
             </table>
           </div>
-        </div>
-
-      </section>
 
 
       {{#with news}}
         <div class="well ">
                <form class="form-horizontal" role="form" data-pubDate="{{pubDate}}" >
-                <h4>{{title}}  <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div> </h4>
+                <h4>{{title}}</h4> <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div>
                 <div class="content">
                   {{{description}}}
                 </div>
