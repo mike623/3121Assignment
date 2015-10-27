@@ -41,7 +41,7 @@ Template.Home.events({
 
       var cleanedWord = obj.comment.removeStopWords();
 
-
+      console.log(cleanedWord);
 
       Meteor.call("countWord", cleanedWord, function(error, result){
         if(error){
