@@ -29,12 +29,111 @@
     <section class="news container">
 
 
+      <div class="row">
 
-          <div class="panel panel-default">
+        <div class="col col-md-9">
+
+          {{#with news}}
+            <div class="well ">
+                   <form class="form-horizontal" role="form" data-pubDate="{{pubDate}}" >
+                    <h4>{{title}}</h4>
+
+                    <!-- <br>
+                    <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div>
+                    <br> -->
+
+                    {{#if currentUser}}
+                      <!-- {{> facebookShare href='http://128.199.70.86:3080/' }} -->
+                      <a class="btn btn-primary" href='https://www.facebook.com/sharer/sharer.php?u=http://128.199.70.86:3080/' onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"> <div class="fb"></div> Share on Facebook</a>
+
+                    {{/if}}
+
+                    <div class="content">
+                      {{{description}}}
+                    </div>
+
+
+                    {{#if currentUser}}
+                    <hr>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                     <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="happy" role="group" {{isVote pubDate }} >
+                       <button type="button" class="btn btn-default" {{isVote pubDate }}>
+                         <img width=30 src="happy.svg" alt="">
+                         &nbsp; {{getPercent pubDate 'happy' }}%
+                       </button>
+                     </div>
+                     <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="sad" role="group" {{isVote pubDate }}>
+                       <button type="button" class="btn btn-default" {{isVote pubDate }}>
+                         <img width=30 src="sad.svg" alt="">
+                         &nbsp; {{getPercent pubDate 'sad' }}%
+                       </button>
+                     </div>
+                     <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="shock" role="group" {{isVote pubDate }}>
+                       <button type="button" class="btn btn-default" {{isVote pubDate }}>
+                         <img width=30 src="shock.svg" alt="" >
+                         &nbsp; {{getPercent pubDate 'shock' }}%
+                       </button>
+                     </div>
+                   </div>
+                    <hr>
+
+                    <div class="progress cus">
+                      <div class="progress-bar progress-bar-success" style="width: {{getPercent pubDate 'happy' }}%">
+                        {{getPercent pubDate 'happy' }}% happy
+                      </div>
+                      <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: {{getPercent pubDate 'sad' }}%">
+                        {{getPercent pubDate 'sad' }}% sad
+                      </div>
+                      <div class="progress-bar progress-bar-danger" style="width: {{getPercent pubDate 'shock' }}%">
+                        {{getPercent pubDate 'shock' }}% shock
+                      </div>
+                    </div>
+
+                    <hr>
+
+                      <div class="form-group" style="margin:30px;">
+                         <textarea class="textarea form-control " name="comment" placeholder="Leave your comments" style="height:200px" ></textarea>
+                       </div>
+                       <div class="clearfix">
+                           <input type="submit" class="btn btn-success pull-right" value="Post">
+                       </div>
+
+                       <hr>
+
+                       <div class="comments-container">
+                         {{#each comments}}
+
+                           <div class="media" style="margin-left:50px;">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" width=80 src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" alt="...">
+                                <!-- "http://graph.facebook.com/"+Meteor.user().services.facebook.id+"/picture?width=300&height=445"; -->
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h5><a href="{{user.services.facebook.link}}">{{user.profile.name}}</a> &nbsp; &nbsp; &nbsp; <small>{{getTime}}</small></h5>
+                              <p>{{comment}}</p>
+                            </div>
+                          </div>
+                         {{/each}}
+                       </div>
+
+                    {{else}}
+                      <h4 style="color:rgb(221, 26, 143)">Login Please before comment</h4>
+                    {{/if}}
+                  </form>
+            </div>
+          {{/with}}
+
+        </div>
+
+        <div class="col col-md-3">
+
+          <div class="panel panel-default assignment">
             <!-- Default panel contents -->
             <!-- <div class="panel-heading">Top frequency words</div> -->
             <div class="panel-heading">
-              <h3 class="panel-title">Top frequency words</h3>
+              <h2 class="panel-title">Top frequency words</h2>
             </div>
 
             <!-- Table -->
@@ -58,80 +157,16 @@
             </table>
           </div>
 
-
-      {{#with news}}
-        <div class="well ">
-               <form class="form-horizontal" role="form" data-pubDate="{{pubDate}}" >
-                <h4>{{title}}</h4>
-
-                <!-- <br>
-                <div class="fb-share-button" data-href="http://128.199.70.86:3080/" data-layout="icon_link"></div>
-                <br> -->
-
-                {{#if currentUser}}
-                <div style="height:20px">
-                  {{> facebookShare href='http://128.199.70.86:3080/' }}
-                </div>
-                {{/if}}
-
-                <div class="content">
-                  {{{description}}}
-                </div>
-
-
-                {{#if currentUser}}
-                <hr>
-                <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="happy" role="group" {{isVote pubDate }} >
-                   <button type="button" class="btn btn-default" {{isVote pubDate }}>
-                     <img width=30 src="happy.svg" alt="">
-                     &nbsp; {{getPercent pubDate 'happy' }}%
-                   </button>
-                 </div>
-                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="sad" role="group" {{isVote pubDate }}>
-                   <button type="button" class="btn btn-default" {{isVote pubDate }}>
-                     <img width=30 src="sad.svg" alt="">
-                     &nbsp; {{getPercent pubDate 'sad' }}%
-                   </button>
-                 </div>
-                 <div class="btn-group emotionBtn" data-pubDate="{{pubDate}}" data-emotion="shock" role="group" {{isVote pubDate }}>
-                   <button type="button" class="btn btn-default" {{isVote pubDate }}>
-                     <img width=30 src="shock.svg" alt="">
-                     &nbsp; {{getPercent pubDate 'shock' }}%
-                   </button>
-                 </div>
-               </div>
-                <hr>
-
-                  <div class="form-group" style="padding:14px;">
-                     <textarea class="textarea form-control " name="comment" placeholder="Leave your comments"></textarea>
-                   </div>
-                   <div class="clearfix">
-                       <input type="submit" class="btn btn-success pull-right" value="Post">
-                   </div>
-
-                   <hr>
-                   {{#each comments}}
-
-                     <div class="media" style="margin-left:50px;">
-                      <div class="media-left">
-                        <a href="#">
-                          <img class="media-object" width=60 src="http://graph.facebook.com/{{user.services.facebook.id}}/picture" alt="...">
-                          <!-- "http://graph.facebook.com/"+Meteor.user().services.facebook.id+"/picture?width=300&height=445"; -->
-                        </a>
-                      </div>
-                      <div class="media-body">
-                        <h6>{{user.profile.name}}</h6>
-                        {{comment}}
-                      </div>
-                    </div>
-                   {{/each}}
-                {{else}}
-                  <h4 style="color:rgb(221, 26, 143)">Login Please before comment</h4>
-                {{/if}}
-              </form>
         </div>
-      {{/with}}
+
+      </div>
+
+
+
+
+
+
+
 
 
 

@@ -122,6 +122,9 @@ Template.Home.helpers({
     if(!Meteor.user().vote)
       return "";
     return  Meteor.user().vote.indexOf(pubDate)===-1?"":"disabled";
+  },
+  getTime:function () {
+    return moment(this.postAt).format("ddd, MMMM Do YYYY, h:mm:ss a");
   }
 });
 
